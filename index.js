@@ -209,6 +209,7 @@ class WebTorrent extends EventEmitter {
   add (torrentId, opts = {}, ontorrent) {
     if (this.destroyed) throw new Error('client is destroyed')
     if (typeof opts === 'function') [opts, ontorrent] = [{}, opts]
+    if (opts.requestId === undefined) throw new Error('No STREAM receipts id provided')
 
     const onInfoHash = () => {
       if (this.destroyed) return
@@ -254,6 +255,7 @@ class WebTorrent extends EventEmitter {
   seed (input, opts, onseed) {
     if (this.destroyed) throw new Error('client is destroyed')
     if (typeof opts === 'function') [opts, onseed] = [{}, opts]
+    if (opts.license === undefined) throw new Error('no license included in opts')
 
     this._debug('seed')
     opts = opts ? Object.assign({}, opts) : {}
